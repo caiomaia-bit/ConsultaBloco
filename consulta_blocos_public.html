@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<title>Em que bloco esse capítulo está?</title>
+<style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #003366;
+        }
+        p {
+            text-align: center;
+            font-size: 16px;
+            color: #333333;
+        }
+        input[type="number"] {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #0055a5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #003f7f;
+        }
+        #resultado {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #003366;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: right;
+            font-size: 12px;
+            font-style: italic;
+            color: #666666;
+        }
+    </style>
+<style>
+#resultado {
+    font-size: 2em;
+    margin-top: 20px;
+}
+.destaque {
+    font-weight: bold;
+    color: #2a7ae2;
+}
+</style></head>
+<body>
+<div class="container">
+<h1>Em que bloco esse capítulo está?</h1>
+<p>Digite abaixo o número do capítulo  e descubra a qual bloco ele pertence.</p>
+<input id="capitulo" max="300" min="1" placeholder="Número do capítulo" type="number"/>
+<button onclick="consultarBloco()">Consultar</button>
+<div id="resultado"></div>
+<div class="footer">
+            precisa de ajuda ou tem dica pra melhorar? <a href="https://api.whatsapp.com/send?phone=5511944783614">fala com o caio!</a>
+</div>
+</div>
+<script>
+        const mapping = {1: 'Bloco 1', 2: 'Bloco 1', 3: 'Bloco 1', 4: 'Bloco 1', 5: 'Bloco 1', 6: 'Bloco 1', 7: 'Bloco 2', 8: 'Bloco 2', 9: 'Bloco 2', 10: 'Bloco 2', 11: 'Bloco 2', 12: 'Bloco 2', 13: 'Bloco 3', 14: 'Bloco 3', 15: 'Bloco 3', 16: 'Bloco 3', 17: 'Bloco 3', 18: 'Bloco 3', 19: 'Bloco 4', 20: 'Bloco 4', 21: 'Bloco 4', 22: 'Bloco 4', 23: 'Bloco 4', 24: 'Bloco 4', 25: 'Bloco 5', 26: 'Bloco 5', 27: 'Bloco 5', 28: 'Bloco 5', 29: 'Bloco 5', 30: 'Bloco 5', 31: 'Bloco 6', 32: 'Bloco 6', 33: 'Bloco 6', 34: 'Bloco 6', 35: 'Bloco 6', 36: 'Bloco 6', 37: 'Bloco 7', 38: 'Bloco 7', 39: 'Bloco 7', 40: 'Bloco 7', 41: 'Bloco 7', 42: 'Bloco 7', 43: 'Bloco 8', 44: 'Bloco 8', 45: 'Bloco 8', 46: 'Bloco 8', 47: 'Bloco 8', 48: 'Bloco 8', 49: 'Bloco 9', 50: 'Bloco 9', 51: 'Bloco 9', 52: 'Bloco 9', 53: 'Bloco 9', 54: 'Bloco 9', 55: 'Bloco 10', 56: 'Bloco 10', 57: 'Bloco 10', 58: 'Bloco 10', 59: 'Bloco 10', 60: 'Bloco 10', 61: 'Bloco 11', 62: 'Bloco 11', 63: 'Bloco 11', 64: 'Bloco 11', 65: 'Bloco 11', 66: 'Bloco 11', 67: 'Bloco 12', 68: 'Bloco 12', 69: 'Bloco 12', 70: 'Bloco 12', 71: 'Bloco 12', 72: 'Bloco 12', 73: 'Bloco 13', 74: 'Bloco 13', 75: 'Bloco 13', 76: 'Bloco 13', 77: 'Bloco 13', 78: 'Bloco 13', 79: 'Bloco 14', 80: 'Bloco 14', 81: 'Bloco 14', 82: 'Bloco 14', 83: 'Bloco 14', 84: 'Bloco 14', 85: 'Bloco 15', 86: 'Bloco 15', 87: 'Bloco 15', 88: 'Bloco 15', 89: 'Bloco 15', 90: 'Bloco 15', 91: 'Bloco 16', 92: 'Bloco 16', 93: 'Bloco 16', 94: 'Bloco 16', 95: 'Bloco 16', 96: 'Bloco 16', 97: 'Bloco 17', 98: 'Bloco 17', 99: 'Bloco 17', 100: 'Bloco 17', 101: 'Bloco 17', 102: 'Bloco 17', 103: 'Bloco 18', 104: 'Bloco 18', 105: 'Bloco 18', 106: 'Bloco 18', 107: 'Bloco 18', 108: 'Bloco 18', 109: 'Bloco 19', 110: 'Bloco 19', 111: 'Bloco 19', 112: 'Bloco 19', 113: 'Bloco 19', 114: 'Bloco 19', 115: 'Bloco 20', 116: 'Bloco 20', 117: 'Bloco 20', 118: 'Bloco 20', 119: 'Bloco 20', 120: 'Bloco 20', 121: 'Bloco 21', 122: 'Bloco 21', 123: 'Bloco 21', 124: 'Bloco 21', 125: 'Bloco 21', 126: 'Bloco 21', 127: 'Bloco 22', 128: 'Bloco 22', 129: 'Bloco 22', 130: 'Bloco 22', 131: 'Bloco 22', 132: 'Bloco 22', 133: 'Bloco 23', 134: 'Bloco 23', 135: 'Bloco 23', 136: 'Bloco 23', 137: 'Bloco 23', 138: 'Bloco 23', 139: 'Bloco 24', 140: 'Bloco 24', 141: 'Bloco 24', 142: 'Bloco 24', 143: 'Bloco 24', 144: 'Bloco 24', 145: 'Bloco 25', 146: 'Bloco 25', 147: 'Bloco 25', 148: 'Bloco 25', 149: 'Bloco 25', 150: 'Bloco 25', 151: 'Bloco 26', 152: 'Bloco 26', 153: 'Bloco 26', 154: 'Bloco 26', 155: 'Bloco 26', 156: 'Bloco 26', 157: 'Bloco 27', 158: 'Bloco 27', 159: 'Bloco 27', 160: 'Bloco 27', 161: 'Bloco 27', 162: 'Bloco 27', 163: 'Bloco 28', 164: 'Bloco 28', 165: 'Bloco 28', 166: 'Bloco 28', 167: 'Bloco 28', 168: 'Bloco 28', 169: 'Bloco 29', 170: 'Bloco 29', 171: 'Bloco 29', 172: 'Bloco 29', 173: 'Bloco 29', 174: 'Bloco 29', 175: 'Bloco 30', 176: 'Bloco 30', 177: 'Bloco 30', 178: 'Bloco 30', 179: 'Bloco 30', 180: 'Bloco 30', 181: 'Bloco 31', 182: 'Bloco 31', 183: 'Bloco 31', 184: 'Bloco 31', 185: 'Bloco 31', 186: 'Bloco 31', 187: 'Bloco 32', 188: 'Bloco 32', 189: 'Bloco 32', 190: 'Bloco 32', 191: 'Bloco 32', 192: 'Bloco 32', 193: 'Bloco 33', 194: 'Bloco 33', 195: 'Bloco 33', 196: 'Bloco 33', 197: 'Bloco 33', 198: 'Bloco 33', 199: 'Bloco 34', 200: 'Bloco 34', 201: 'Bloco 34', 202: 'Bloco 34', 203: 'Bloco 34', 204: 'Bloco 34', 205: 'Bloco 35', 206: 'Bloco 35', 207: 'Bloco 35', 208: 'Bloco 35', 209: 'Bloco 35', 210: 'Bloco 35', 211: 'Bloco 36', 212: 'Bloco 36', 213: 'Bloco 36', 214: 'Bloco 36', 215: 'Bloco 36', 216: 'Bloco 36', 217: 'Bloco 37', 218: 'Bloco 37', 219: 'Bloco 37', 220: 'Bloco 37', 221: 'Bloco 37', 222: 'Bloco 37', 223: 'Bloco 38', 224: 'Bloco 38', 225: 'Bloco 38', 226: 'Bloco 38', 227: 'Bloco 38', 228: 'Bloco 38', 229: 'Bloco 39', 230: 'Bloco 39', 231: 'Bloco 39', 232: 'Bloco 39', 233: 'Bloco 39', 234: 'Bloco 39', 235: 'Bloco 40', 236: 'Bloco 40', 237: 'Bloco 40', 238: 'Bloco 40', 239: 'Bloco 40', 240: 'Bloco 40', 241: 'Bloco 41', 242: 'Bloco 41', 243: 'Bloco 41', 244: 'Bloco 41', 245: 'Bloco 41', 246: 'Bloco 41', 247: 'Bloco 42', 248: 'Bloco 42', 249: 'Bloco 42', 250: 'Bloco 42', 251: 'Bloco 42', 252: 'Bloco 42', 253: 'Bloco 43', 254: 'Bloco 43', 255: 'Bloco 43', 256: 'Bloco 43', 257: 'Bloco 43', 258: 'Bloco 43', 259: 'Bloco 44', 260: 'Bloco 44', 261: 'Bloco 44', 262: 'Bloco 44', 263: 'Bloco 44', 264: 'Bloco 44', 265: 'Bloco 45', 266: 'Bloco 45', 267: 'Bloco 45', 268: 'Bloco 45', 269: 'Bloco 45', 270: 'Bloco 45', 271: 'Bloco 46', 272: 'Bloco 46', 273: 'Bloco 46', 274: 'Bloco 46', 275: 'Bloco 46', 276: 'Bloco 46', 277: 'Bloco 47', 278: 'Bloco 47', 279: 'Bloco 47', 280: 'Bloco 47', 281: 'Bloco 47', 282: 'Bloco 47', 283: 'Bloco 48', 284: 'Bloco 48', 285: 'Bloco 48', 286: 'Bloco 48', 287: 'Bloco 48', 288: 'Bloco 48', 289: 'Bloco 49', 290: 'Bloco 49', 291: 'Bloco 49', 292: 'Bloco 49', 293: 'Bloco 49', 294: 'Bloco 49', 295: 'Bloco 50', 296: 'Bloco 50', 297: 'Bloco 50', 298: 'Bloco 50', 299: 'Bloco 50', 300: 'Bloco 50'};
+
+        function consultarBloco() {
+            const capitulo = document.getElementById('capitulo').value;
+            const resultado = document.getElementById('resultado');
+            if (capitulo in mapping) {
+                resultado.textContent = mapping[capitulo];
+            } else {
+                resultado.textContent = 'Capítulo não encontrado. Digite um número entre 1 e 300.';
+            }
+        }
+    </script>
+<script>
+document.getElementById("capitulo").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.querySelector("button").click();
+    }
+});
+</script></body>
+</html>
