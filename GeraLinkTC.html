@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de link com timecode</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #003366;
+        }
+        p {
+            text-align: left;
+            font-size: 16px;
+            color: #333333;
+        }
+        .input-row {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .input-row input {
+            padding: 8px;
+            font-size: 16px;
+            margin: 5px 5px 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+        }
+        #linkVideo {
+            width: 400px;
+        }
+        #minutos, #segundos {
+            width: 50px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #0055a5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 200px;
+            text-align: center;
+        }
+        button:hover {
+            background-color: #003f7f;
+        }
+        .small-text {
+            font-size: 12px;
+            display: block;
+        }
+        #resultado {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #003366;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: right;
+            font-size: 12px;
+            font-style: italic;
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerador de link com timecode</h1>
+        <p>Coloque as informações do vídeo nas caixas abaixo e clique em "gerar" para obter o link com minutagem.</p>
+        <div class="input-row">
+            Link do vídeo: <input type="text" id="linkVideo" placeholder="exemplo: https://globoplay.globo.com/..." oninput="autoAvancar(this, 'minutos')">
+        </div>
+        <div class="input-row">
+            Timecode: <input type="text" id="minutos" maxlength="2" placeholder="mm" oninput="autoAvancar(this, 'segundos')">
+            <input type="text" id="segundos" maxlength="2" placeholder="ss" onkeydown="verificaEnter(event)">
+        </div>
+        <div class="buttons">
+            <button onclick="gerarLink(false)">Gerar link</button>
+            <button onclick="gerarLink(true)">
+                Gerar link<br><span class="small-text">(começar 2 segundos antes)</span>
+            </button>
+        </div>
+        <div id="resultado"></div>
+        <div class="footer">
+            precisa de ajuda ou tem dica pra melhorar? <a href="https://api.whatsapp.com/send?phone=5511944783614">fala com o caio!</a>
+        </div>
+    </div>
+
+    <script>
+        function autoAvancar(atual, proximoId) {
+            if (atual.value.length >= atual.maxLength || atual.id === "linkVideo") {
+                document.getElementById(proximoId).focus();
+            }
+        }
+
+        function verificaEnter(event) {
+            if (event.key === "Enter") {
+                gerarLink(false);
+            }
+        }
+
+        function gerarLink(menosDoisSegundos) {
+            const link = document.getElementById("linkVideo").value.trim();
+            const mm = document.getElementById("minutos").value.trim();
+            const ss = document.getElementById("segundos").value.trim();
+
+            if (!link || !mm || !ss || isNaN(mm) || isNaN(ss)) {
+                document.getElementById("resultado").innerHTML = "⚠️ Preencha todos os campos corretamente.";
+                return;
+            }
+
+            let totalSegundos = parseInt(mm) * 60 + parseInt(ss);
+            if (menosDoisSegundos) totalSegundos = Math.max(0, totalSegundos - 2);
+
+            const linkFinal = `${link}?s=${totalSegundos}s`;
+            document.getElementById("resultado").innerHTML = `
+                <div>
+                    <a href="${linkFinal}" target="_blank">${linkFinal}</a><br><br>
+                    <button onclick="copiarLink('${linkFinal}')">Copiar link</button>
+                </div>
+            `;
+        }
+
+        function copiarLink(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                alert("Link copiado para a área de transferência!");
+            });
+        }
+    </script>
+</body>
+</html>
