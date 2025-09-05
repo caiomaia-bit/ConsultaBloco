@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Gerador de link com timecode</title>
-    <style>
+<meta charset="utf-8"/>
+<title>Gerador de link com timecode</title>
+<style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(to right, #f0f4f8, #d9e2ec);
@@ -86,36 +87,34 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Gerador de link com timecode</h1>
-        <p>Preencha as informações abaixo e clique em "gerar" para obter o link minutado.</p>
-        <div class="input-row">
-            Link do vídeo: <input type="text" id="linkVideo" placeholder="copie e cole o link aqui: https://globoplay.globo.com/..." oninput="autoAvancar(this, 'minutos')">
-        </div>
-        <div class="input-row">
-            Timecode: <input type="text" id="minutos" maxlength="2" placeholder="mm" oninput="autoAvancar(this, 'segundos')">
-            <input type="text" id="segundos" maxlength="2" placeholder="ss" onkeydown="verificaEnter(event)">
-        </div>
-        <div class="buttons">
-            <button onclick="gerarLink(false)">Gerar link</button>
-            <button onclick="gerarLink(true)">
-                Gerar link<br><span class="small-text">(começar 2 segundos antes)</span>
-            </button>
-<br>
-<div style="text-align: center; margin-top: 10px;">
-    <button onclick="limparCampos()" style="background-color: #2ecc71; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 6px; cursor: pointer;">
-        🔄 Limpar campos<br><span class="small-text">recomeçar com outro link</span>
-    </button>
+<div class="container">
+<h1>Gerador de link com timecode</h1>
+<p>Preencha as informações abaixo e clique em "gerar" para obter o link minutado.</p>
+<div class="input-row">
+            Link do vídeo: <input id="linkVideo" oninput="autoAvancar(this, 'minutos')" placeholder="copie e cole o link aqui: https://globoplay.globo.com/..." type="text"/>
 </div>
-
-        </div>
-        <div id="resultado"></div>
-        <div class="footer">
+<div class="input-row">
+            Timecode: <input id="minutos" maxlength="2" oninput="autoAvancar(this, 'segundos')" placeholder="mm" type="text"/>
+<input id="segundos" maxlength="2" onkeydown="verificaEnter(event)" placeholder="ss" type="text"/>
+</div>
+<div class="buttons">
+<button onclick="gerarLink(false)">Gerar link</button>
+<button onclick="gerarLink(true)">
+                Gerar link<br/><span class="small-text">(começar 2s antes)</span>
+</button>
+<br/>
+<div style="text-align: center; margin-top: 10px;">
+<button onclick="limparCampos()" style="background-color: #2ecc71; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 6px; cursor: pointer;">
+        🔄 Limpar campos<br/><span class="small-text">recomeçar com outro link</span>
+</button>
+</div>
+</div>
+<div id="resultado"></div>
+<div class="footer">
             precisa de ajuda ou tem dica pra melhorar? <a href="https://api.whatsapp.com/send?phone=5511944783614">fala com o caio!</a>
-        </div>
-    </div>
-
-    <script>
+</div>
+</div>
+<script>
         function autoAvancar(atual, proximoId) {
             if (atual.value.length >= atual.maxLength || atual.id === "linkVideo") {
                 document.getElementById(proximoId).focus();
@@ -141,7 +140,8 @@
             let totalSegundos = parseInt(mm) * 60 + parseInt(ss);
             if (menosDoisSegundos) totalSegundos = Math.max(0, totalSegundos - 2);
 
-            const linkFinal = `${link}?s=${totalSegundos}s`;
+    const cleanLink = link.split("?")[0];
+    const linkFinal = `${cleanLink}?s=${totalSegundos}s`;
             document.getElementById("resultado").innerHTML = `
                 <div>
                     <a href="${linkFinal}" target="_blank">${linkFinal}</a><br><br>
@@ -152,7 +152,7 @@
 
         function copiarLink(link) {
             navigator.clipboard.writeText(link).then(() => {
-                alert("Link copiado para a área de transferência 😎");
+                alert("Link copiado para a área de transferência!");
             });
         }
     
